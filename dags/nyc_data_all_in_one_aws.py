@@ -11,6 +11,7 @@ import os
 import airflow.hooks.S3_hook
 
 
+sqluser = os.environ.get('mysql_user')
 mysqlkey = os.environ.get('mysql_key')
 
 
@@ -84,7 +85,7 @@ t1b = PythonOperator(
 
 
 def abb_csv_to_mysql():
-    conn = create_engine("mysql+pymysql://admin:" + mysqlkey + "@airflow-rds.chzeyzpv1w8k.us-east-1.rds.amazonaws.com:3306/airflow_project")
+    conn = create_engine("mysql+pymysql://" + mysqlkey + ":" + mysqlkey + "@airflow-rds.chzeyzpv1w8k.us-east-1.rds.amazonaws.com:3306/airflow_project")
     df = pd.read_csv(path_etl_abb, delimiter=',')
     df.to_sql(name='nyc_abb', con=conn, schema='airflow_project', if_exists='replace')
 
@@ -151,7 +152,7 @@ t2b = PythonOperator(
 
 
 def nyc_park_csv_to_mysql():
-    conn = create_engine("mysql+pymysql://admin:" + mysqlkey + "@airflow-rds.chzeyzpv1w8k.us-east-1.rds.amazonaws.com:3306/airflow_project")
+    conn = create_engine("mysql+pymysql://" + mysqlkey + ":" + mysqlkey + "@airflow-rds.chzeyzpv1w8k.us-east-1.rds.amazonaws.com:3306/airflow_project")
     df = pd.read_csv(path_etl_park, delimiter=',')
     df.to_sql(name='nyc_park', con=conn, schema='airflow_project', if_exists='replace')
 
@@ -209,7 +210,7 @@ t3b = PythonOperator(
 
 
 def nyc_shooting_csv_to_mysql():
-    conn = create_engine("mysql+pymysql://admin:" + mysqlkey + "@airflow-rds.chzeyzpv1w8k.us-east-1.rds.amazonaws.com:3306/airflow_project")
+    conn = create_engine("mysql+pymysql://" + mysqlkey + ":" + mysqlkey + "@airflow-rds.chzeyzpv1w8k.us-east-1.rds.amazonaws.com:3306/airflow_project")
     df = pd.read_csv(path_etl_shooting, delimiter=',')
     df.to_sql(name='nyc_shooting', con=conn, schema='airflow_project', if_exists='replace')
 
@@ -267,7 +268,7 @@ t4b = PythonOperator(
 
 
 def nyc_hotel_csv_to_mysql():
-    conn = create_engine("mysql+pymysql://admin:" + mysqlkey + "@airflow-rds.chzeyzpv1w8k.us-east-1.rds.amazonaws.com:3306/airflow_project")
+    conn = create_engine("mysql+pymysql://" + mysqlkey + ":" + mysqlkey +  "@airflow-rds.chzeyzpv1w8k.us-east-1.rds.amazonaws.com:3306/airflow_project")
     df = pd.read_csv(path_etl_hotel, delimiter=',')
     df.to_sql(name='nyc_hotel', con=conn, schema='airflow_project', if_exists='replace')
 
@@ -331,7 +332,7 @@ t5b = PythonOperator(
 
 
 def nyc_housing_csv_to_mysql():
-    conn = create_engine("mysql+pymysql://admin:" + mysqlkey + "@airflow-rds.chzeyzpv1w8k.us-east-1.rds.amazonaws.com:3306/airflow_project")
+    conn = create_engine("mysql+pymysql://" + mysqlkey + ":" + mysqlkey + "@airflow-rds.chzeyzpv1w8k.us-east-1.rds.amazonaws.com:3306/airflow_project")
     df = pd.read_csv(path_etl_housing, delimiter=',')
     df.to_sql(name='nyc_housing', con=conn, schema='airflow_project', if_exists='replace')
 
@@ -388,7 +389,7 @@ t6b = PythonOperator(
 
 
 def nyc_hot_spot_csv_to_mysql():
-    conn = create_engine("mysql+pymysql://admin:" + mysqlkey + "@airflow-rds.chzeyzpv1w8k.us-east-1.rds.amazonaws.com:3306/airflow_project")
+    conn = create_engine("mysql+pymysql://" + mysqlkey + ":" + mysqlkey + "@airflow-rds.chzeyzpv1w8k.us-east-1.rds.amazonaws.com:3306/airflow_project")
     df = pd.read_csv(path_etl_hotspot, delimiter=',')
     df.to_sql(name='nyc_hot_spot', con=conn, schema='airflow_project', if_exists='replace')
 

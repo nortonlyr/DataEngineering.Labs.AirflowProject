@@ -10,7 +10,9 @@ from datetime import datetime
 import os
 
 
+mysqluser = os.environ.get('mysql_user')
 mysqlkey = os.environ.get('mysql_key')
+postgreuser = os.environ.get('postgres_user')
 postgreskey = os.environ.get('postgres_key')
 
 
@@ -27,7 +29,7 @@ default_args = {
 
 
 dag = DAG(
-    dag_id='airbnb_nyc_housing_correlation_study_updated5',
+    dag_id='airbnb_nyc_housing_correlation_study_updated6',
     default_args=default_args,
     #chedule_interval=timedelta(days=1),
     description='Airbnb NYC housing open data and NYC open data of 2019 study',
@@ -82,7 +84,7 @@ t1b = PythonOperator(
 
 
 def abb_csv_to_mysql():
-    conn = create_engine("mysql+pymysql://root:" + mysqlkey + "@localhost:3306/airflow_project")
+    conn = create_engine("mysql+pymysql://" + mysqluser + ":" + mysqlkey + "@localhost:3306/airflow_project")
     df = pd.read_csv(path_etl_abb, delimiter=',')
     df.to_sql(name='nyc_abb', con=conn, schema='airflow_project', if_exists='replace')
 
@@ -95,7 +97,7 @@ t1c = PythonOperator(
 
 
 def abb_csv_to_postgres():
-    conn = create_engine("postgresql+psycopg2://postgres:" + postgreskey + "@localhost:5432/airflow_p")
+    conn = create_engine("postgresql+psycopg2://" + postgreuser + ":" + postgreskey + "@localhost:5432/airflow_p")
     df = pd.read_csv(path_etl_abb, delimiter=',')
     df.to_sql(name='nyc_airbb', con=conn, schema='nyc_data', if_exists='replace')
 
@@ -161,7 +163,7 @@ t2b = PythonOperator(
 
 
 def nyc_park_csv_to_mysql():
-    conn = create_engine("mysql+pymysql://root:" + mysqlkey + "@localhost:3306/airflow_project")
+    conn = create_engine("mysql+pymysql://" + mysqluser + ":" + mysqlkey + "@localhost:3306/airflow_project")
     df = pd.read_csv(path_etl_park, delimiter=',')
     df.to_sql(name='nyc_park', con=conn, schema='airflow_project', if_exists='replace')
 
@@ -174,7 +176,7 @@ t2c = PythonOperator(
 
 
 def nyc_park_csv_to_postgres():
-    conn = create_engine("postgresql+psycopg2://postgres:" + ":" + postgreskey + "@localhost:5432/airflow_p")
+    conn = create_engine("postgresql+psycopg2://" + postgreuser + ":" + postgreskey + "@localhost:5432/airflow_p")
     df = pd.read_csv(path_etl_park, delimiter=',')
     df.to_sql(name='nyc_park', con=conn, schema='nyc_data', if_exists='replace')
 
@@ -232,7 +234,7 @@ t3b = PythonOperator(
 
 
 def nyc_shooting_csv_to_mysql():
-    conn = create_engine("mysql+pymysql://root:" + mysqlkey + "@localhost:3306/airflow_project")
+    conn = create_engine("mysql+pymysql://" + mysqluser + ":" + mysqlkey +"@localhost:3306/airflow_project")
     df = pd.read_csv(path_etl_shooting, delimiter=',')
     df.to_sql(name='nyc_shooting', con=conn, schema='airflow_project', if_exists='replace')
 
@@ -245,7 +247,7 @@ t3c = PythonOperator(
 
 
 def nyc_shooting_csv_to_postgres():
-    conn = create_engine("postgresql+psycopg2://postgres:" + ":" + postgreskey + "@localhost:5432/airflow_p")
+    conn = create_engine("postgresql+psycopg2://" + postgreuser + ":" + postgreskey + "@localhost:5432/airflow_p")
     df = pd.read_csv(path_etl_shooting, delimiter=',')
     df.to_sql(name='nyc_shooting', con=conn, schema='nyc_data', if_exists='replace')
 
@@ -303,7 +305,7 @@ t4b = PythonOperator(
 
 
 def nyc_hotel_csv_to_mysql():
-    conn = create_engine("mysql+pymysql://root:" + mysqlkey + "@localhost:3306/airflow_project")
+    conn = create_engine("mysql+pymysql://" + mysqluser + ":" + mysqlkey + "@localhost:3306/airflow_project")
     df = pd.read_csv(path_etl_hotel, delimiter=',')
     df.to_sql(name='nyc_hotel', con=conn, schema='airflow_project', if_exists='replace')
 
@@ -316,7 +318,7 @@ t4c = PythonOperator(
 
 
 def nyc_hotel_csv_to_postgres():
-    conn = create_engine("postgresql+psycopg2://postgres:" + ":" + postgreskey + "@localhost:5432/airflow_p")
+    conn = create_engine("postgresql+psycopg2://" + postgreuser + ":" + postgreskey + "@localhost:5432/airflow_p")
     df = pd.read_csv(path_etl_hotel, delimiter=',')
     df.to_sql(name='nyc_hotel', con=conn, schema='nyc_data', if_exists='replace')
 
@@ -380,7 +382,7 @@ t5b = PythonOperator(
 
 
 def nyc_housing_csv_to_mysql():
-    conn = create_engine("mysql+pymysql://root:" + mysqlkey + "@localhost:3306/airflow_project")
+    conn = create_engine("mysql+pymysql://" + mysqluser + ":" + mysqlkey + "@localhost:3306/airflow_project")
     df = pd.read_csv(path_etl_housing, delimiter=',')
     df.to_sql(name='nyc_housing', con=conn, schema='airflow_project', if_exists='replace')
 
@@ -393,7 +395,7 @@ t5c = PythonOperator(
 
 
 def nyc_pb_housing_csv_to_postgres():
-    conn = create_engine("postgresql+psycopg2://postgres:" + ":" + postgreskey + "@localhost:5432/airflow_p")
+    conn = create_engine("postgresql+psycopg2://" + postgreuser + ":" + postgreskey + "@localhost:5432/airflow_p")
     df = pd.read_csv(path_etl_housing, delimiter=',')
     df.to_sql(name='nyc_pb_housing', con=conn, schema='nyc_data', if_exists='replace')
 
@@ -450,7 +452,7 @@ t6b = PythonOperator(
 
 
 def nyc_hot_spot_csv_to_mysql():
-    conn = create_engine("mysql+pymysql://root:" + mysqlkey + "@localhost:3306/airflow_project")
+    conn = create_engine("mysql+pymysql://" + mysqluser + ":" + mysqlkey + "@localhost:3306/airflow_project")
     df = pd.read_csv(path_etl_hotspot, delimiter=',')
     df.to_sql(name='nyc_hot_spot', con=conn, schema='airflow_project', if_exists='replace')
 
@@ -463,7 +465,7 @@ t6c = PythonOperator(
 
 
 def nyc_hot_spot_csv_to_postgres():
-    conn = create_engine("postgresql+psycopg2://postgres:" + ":" + postgreskey + "@localhost:5432/airflow_p")
+    conn = create_engine("postgresql+psycopg2://" + postgreuser + ":" + postgreskey + "@localhost:5432/airflow_p")
     df = pd.read_csv(path_etl_hotspot, delimiter=',')
     df.to_sql(name='nyc_hot_spot', con=conn, schema='nyc_data', if_exists='replace')
 
