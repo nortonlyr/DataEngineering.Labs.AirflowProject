@@ -11,7 +11,7 @@ import os
 import airflow.hooks.S3_hook
 
 
-sqluser = os.environ.get('mysql_user')
+mysqluser = os.environ.get('mysql_user')
 mysqlkey = os.environ.get('mysql_key')
 
 

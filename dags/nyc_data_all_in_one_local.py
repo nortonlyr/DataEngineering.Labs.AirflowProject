@@ -482,6 +482,7 @@ t_final = DummyOperator(
     dag=dag
 )
 
+
 #DAGS Flowing Chart
 t0 >> t1a >> t1b >> t1c >> t_final >> t1e,
 t0 >> t1a >> t1b >> t1d >> t_final,
